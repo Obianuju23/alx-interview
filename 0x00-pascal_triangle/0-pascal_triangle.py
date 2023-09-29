@@ -12,7 +12,7 @@ def pascal_triangle(n):
     if n <= 0:
         return []
 
-    pas_triangle = [1]
+    pas_triangle = [[1]]
     while len(pas_triangle) != n:
         previous = pas_triangle[-1]
         current = [1]
