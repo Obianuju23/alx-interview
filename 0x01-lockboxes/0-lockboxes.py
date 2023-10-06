@@ -7,20 +7,14 @@ def canUnlockAll(boxes):
     (indices) to other boxes can be unlocked given that the first
     box is unlocked.
     """
-    n = len(boxes)  # Total number of boxes
-    visited = [False] * n  # Create a list to keep track of visited boxes
-    visited[0] = True  # Mark the first box as visited
-    queue = [0]  # Create list as a queue and initialize it with the first box
-
-    while queue:
-        current_box = queue.pop(0)  # Get current box frm d front of the queue
-
-        # Check all the keys in the current box
-        for key in boxes[current_box]:
-            if key >= 0 and key < n and not visited[key]:
-                # If key is valid&leads to an unvisited box,mark it as visited
-                visited[key] = True
-                queue.append(key)
-
-    # Check if all boxes have been visited
-    return all(visited)
+     n = len(boxes)
+    seen_boxes = set([0])
+    unseen_boxes = set(boxes[0]).difference(set([0]))
+    while len(unseen_boxes) > 0:
+        boxIdx = unseen_boxes.pop()
+        if not boxIdx or boxIdx >= n or boxIdx < 0:
+            continue
+        if boxIdx not in seen_boxes:
+            unseen_boxes = unseen_boxes.union(boxes[boxIdx])
+            seen_boxes.add(boxIdx)
+    return n == len(seen_boxes) 
