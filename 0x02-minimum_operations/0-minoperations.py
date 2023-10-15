@@ -14,20 +14,20 @@ def minOperations(n):
     '''
     returns the minimum operations to get n H's
     '''
+    
     min_operations = 0
     paste_buffer = 0
 
-    if n <= 1:
-        return min_operations
-
     for i in range(2, n + 1):
         while n % i == 0:
-            if paste_buffer < 0:
-                min_operations += i
-                paste_buffer -= i
+            if paste_buffer > 0:
+                # If there's content in the paste buffer, we can paste it
+                min_operations += 1
+                paste_buffer -= 1
             else:
+                # Otherwise, we need to copy everything
                 paste_buffer = i
             n /= i
 
-    min_operation += paste_buffer
+    min_operations += paste_buffer  # Paste the remaining content in the buffer
     return min_operations
