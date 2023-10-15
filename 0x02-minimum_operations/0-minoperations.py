@@ -1,33 +1,30 @@
 #!/usr/bin/python3
+"""
+Minimum Operations
+"""
+
+import math
 
 
-''' A module that returns the minimum Operations it takes to
-    get to n characters.
-
-    Available operations:
-        copy
-        paste
-'''
+def factors(n):
+    """factors of n number"""
+    mylist = []
+    while n % 2 == 0:
+        mylist.append(2)
+        n = n / 2
+    for i in range(3, int(math.sqrt(n)) + 1, 2):
+        while n % i == 0:
+            mylist.append(i)
+            n = n / i
+    if n > 2:
+        mylist.append(n)
+    return mylist
 
 
 def minOperations(n):
-    '''
-    returns the minimum operations to get n H's
-    '''
-    
-    min_operations = 0
-    paste_buffer = 0
-
-    for i in range(2, n + 1):
-        while n % i == 0:
-            if paste_buffer > 0:
-                # If there's content in the paste buffer, we can paste it
-                min_operations += 1
-                paste_buffer -= 1
-            else:
-                # Otherwise, we need to copy everything
-                paste_buffer = i
-            n /= i
-
-    min_operations += paste_buffer  # Paste the remaining content in the buffer
-    return min_operations
+    """calculate the minimum operations"""
+    if type(n) != int or n < 2:
+        return 0
+    else:
+        numOperations = sum(factors(n))
+        return int(numOperations)
