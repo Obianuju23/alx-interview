@@ -2,35 +2,35 @@
 // This script that prints all characters of a Star Wars movie
 
 const request = require('request');
-const movieId = process.argv[2];
-const filmsApiUrl = 'https://swapi-api.hbtn.io/api/films';
 
-function fetchJSON (url) {
-  return new Promise(function (resolve, reject) {
+const url = 'https://swapi-api.alx-tools.com/api/films/' + process.argv[2];
+
+function makeRequest (url) {
+  return new Promise((resolve, reject) => {
     request(url, function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        resolve(JSON.parse(body));
+      if (error) {
+        reject(new Error(error)); // Pass an Error object as the rejection reason
+      } else if (response.statusCode !== 200) {
+        reject(new Error('Error: ' + response.statusCode)); // Pass an Error object as the rejection reason
       } else {
-        reject(error);
+        resolve(JSON.parse(body));
       }
     });
   });
 }
 
-async function printStarWarsCharacters (movieId) {
+async function fetchCharacters () {
   try {
-    const filmData = await fetchJSON(`${filmsApiUrl}/${movieId}`);
-    for (const characterUrl of filmData.characters) {
-      try {
-        const characterData = await fetchJSON(characterUrl);
-        console.log(characterData.name);
-      } catch (error) {
-        console.error(`Error fetching character data: ${error}`);
-      }
+    const filmData = await makeRequest(url);
+    const characters = filmData.characters;
+
+    for (const character of characters) {
+      const characterData = await makeRequest(character);
+      console.log(characterData.name);
     }
   } catch (error) {
-    console.error(`Error fetching movie data: ${error}`);
+    console.error(error);
   }
 }
 
-printStarWarsCharacters(movieId);
+fetchCharacters();
