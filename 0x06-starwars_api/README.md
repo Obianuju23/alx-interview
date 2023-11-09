@@ -42,7 +42,9 @@ You must use the Star wars API
 You must use the request module
 
 
-alexa@ubuntu:~/0x06$ ./0-starwars_characters.js 3
+### alexa@ubuntu:~/0x06$ ./0-starwars_characters.js 3
+
+
 Luke Skywalker
 C-3PO
 R2-D2
