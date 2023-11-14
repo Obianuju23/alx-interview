@@ -22,4 +22,4 @@ def rotate_2d_matrix(matrix):
     # reverse the matrix
     for row in range((N // 2)):
         for col in range(N):
-             matrix[col][row], matrix[col][N - 1 - row] = matrix[col][N - 1 - row], matrix[col][row]  # noqa: E501
+            matrix[col][row], matrix[col][N - 1 - row] = matrix[col][N - 1 - row], matrix[col][row]  # noqa: E501
